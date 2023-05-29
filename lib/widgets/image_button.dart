@@ -21,6 +21,8 @@ class XPImageButton extends StatefulWidget {
 }
 
 class _XPImageButtonState extends State<XPImageButton> {
+  late Image image;
+
   String imageController(bool isActive, isEnabled) {
     if (isEnabled) {
       if (isActive) {
@@ -34,12 +36,22 @@ class _XPImageButtonState extends State<XPImageButton> {
   }
 
   @override
+  void initState() {
+    image = Image.asset(
+      imageController(widget.isActive ?? false, widget.isEnabled ?? true),
+      gaplessPlayback: true,
+    );
+    super.initState();
+  }
+
+  @override
+  void didChangeDependencies() {
+    precacheImage(image.image, context);
+    super.didChangeDependencies();
+  }
+
+  @override
   Widget build(BuildContext context) {
-    return GestureDetector(
-        onTap: () => widget.onTap(),
-        child: Image.asset(
-          imageController(widget.isActive ?? false, widget.isEnabled ?? true),
-          gaplessPlayback: true,
-        ));
+    return GestureDetector(onTap: () => widget.onTap(), child: image);
   }
 }

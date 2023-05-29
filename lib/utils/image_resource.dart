@@ -32,6 +32,10 @@ class ImageResources {
   var taskbarMin = "assets/taskbar/icons/minimize_button.png";
   var taskbarFull = "assets/taskbar/icons/fullscreen_button.png";
 
+  var backButton = "assets/taskbar/icons/backbutton.png";
+  var backButtonDisabled = "assets/taskbar/icons/backbutton_disabled.png";
+  var goButton = "assets/taskbar/icons/gobtn.png";
+
   // Sound button
   var soundOff = "assets/icons/sound_off.png";
   var soundOn = "assets/icons/sound_on.png";

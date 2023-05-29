@@ -160,19 +160,38 @@ class Window extends StatefulWidget {
 class _WindowState extends State<Window> {
   final double _toolbarHeight = 30;
   late BorderRadiusGeometry _defaultRadius;
+  late Image appTopRight,
+      appTopLeft,
+      appTopBody,
+      taskbarMin,
+      taskbarMax,
+      taskbarQuit;
 
   @override
   void initState() {
     super.initState();
+    appTopBody = Image.asset(ImageResources().applicationTopBody,
+        repeat: ImageRepeat.repeatX);
+    appTopLeft = Image.asset(ImageResources().applicationTopLeft);
+    appTopRight = Image.asset(ImageResources().applicationTopRight);
+
     _defaultRadius = widget.borderRadius ??
         const BorderRadius.only(
             topLeft: Radius.circular(7), topRight: Radius.circular(7));
   }
 
   @override
+  void didChangeDependencies() {
+    precacheImage(appTopBody.image, context);
+    precacheImage(appTopLeft.image, context);
+    precacheImage(appTopRight.image, context);
+    super.didChangeDependencies();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Draggable(
-        feedback: widget,
+        feedback: Material(color: Colors.transparent, child: widget),
         childWhenDragging: const SizedBox(),
         maxSimultaneousDrags: (widget.windowModel.isDraggable) ? 1 : 0,
         onDragEnd: widget.windowModel.dragWindow,
@@ -203,17 +222,11 @@ class _WindowState extends State<Window> {
                         height: _toolbarHeight,
                         child: Row(
                           children: [
-                            if (!widget.windowModel.isFullScreen)
-                              Image.asset(ImageResources().applicationTopLeft),
+                            if (!widget.windowModel.isFullScreen) appTopLeft,
                             Flexible(
                               child: Stack(
                                 children: [
-                                  Positioned.fill(
-                                    child: Image.asset(
-                                      ImageResources().applicationTopBody,
-                                      repeat: ImageRepeat.repeatX,
-                                    ),
-                                  ),
+                                  Positioned.fill(child: appTopBody),
                                   Positioned.fill(
                                       child: Padding(
                                     padding: (widget.windowModel.isFullScreen)
@@ -225,20 +238,19 @@ class _WindowState extends State<Window> {
                                 ],
                               ),
                             ),
-                            if (!widget.windowModel.isFullScreen)
-                              Image.asset(ImageResources().applicationTopRight)
+                            if (!widget.windowModel.isFullScreen) appTopRight
                           ],
                         ),
                       ),
                     ),
                   Flexible(
                       child: Container(
-                    margin: (!widget.windowModel.isFullScreen)
-                        ? const EdgeInsets.only(left: 2, right: 2, bottom: 2)
-                        : null,
-                    color: Colors.white,
-                    child: widget.child,
-                  ))
+                          margin: (!widget.windowModel.isFullScreen)
+                              ? const EdgeInsets.only(
+                                  left: 2, right: 2, bottom: 2)
+                              : null,
+                          color: Colors.white,
+                          child: widget.child))
                 ],
               ),
             ),
