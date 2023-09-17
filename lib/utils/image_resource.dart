@@ -4,8 +4,7 @@ class ImageResources {
 
   // StartButton
   var startButton = "assets/buttons/startButton/start_button.png";
-  var startButtonActivated =
-      "assets/buttons/startButton/start_button_pressed.png";
+  var startButtonActivated = "assets/buttons/startButton/start_button_pressed.png";
 
   // StartMenu
   var startMenuTopLeft = "assets/taskbar/start_menu_left.jpg";
@@ -16,17 +15,7 @@ class ImageResources {
   var startMenuBottomBody = "assets/taskbar/start_menu_footer.jpg";
   var startMenuBottomRight = "assets/taskbar/start_menu_footer_right.jpg";
 
-  // Application Window
-  var applicationTopLeft = "assets/taskbar/windowTopLeftCorner.png";
-  var applicationTopRight = "assets/taskbar/windowTopRightCorner.png";
-  var applicationTopBody = "assets/taskbar/windowTopBody.png";
-
   var menuAvatar = "assets/images/profile_picture.jpg";
-
-  // Taskbar
-  var taskbarStart = "assets/taskbar/taskbar_start.png";
-  var taskbarSplit = "assets/taskbar/taskbar_split.png";
-  var taskbarEnd = "assets/taskbar/taskbar_end.png";
 
   var taskbarClose = "assets/taskbar/icons/close_button.png";
   var taskbarMin = "assets/taskbar/icons/minimize_button.png";

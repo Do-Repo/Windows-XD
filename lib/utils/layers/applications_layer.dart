@@ -16,7 +16,7 @@ class _ApplicationLayerState extends State<ApplicationLayer> {
   Widget build(BuildContext context) {
     var app = Provider.of<System32>(context);
     return Stack(
-      children: app.openApplications,
+      children: app.openApplications.map((e) => e).toList(),
     );
   }
 }

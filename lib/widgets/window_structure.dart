@@ -3,155 +3,17 @@ import 'package:my_portfolio/models/window_model.dart';
 import 'package:my_portfolio/utils/font_resource.dart';
 import 'package:my_portfolio/utils/image_resource.dart';
 import 'package:my_portfolio/widgets/image_button.dart';
-import 'package:my_portfolio/widgets/taskbar.dart';
 import 'package:provider/provider.dart';
 
 import '../utils/app_provider.dart';
 
-class WindowStructure extends StatefulWidget {
-  const WindowStructure({
-    super.key,
-    required this.windowWidth,
-    this.windowHeight,
-    required this.topBarHeight,
-    required this.bottomBarHeight,
-    required this.topLeftCorner,
-    required this.topRightCorner,
-    required this.bottomLeftCorner,
-    required this.bottomRightCorner,
-    required this.topBody,
-    required this.bottomBody,
-    this.topBarChild,
-    this.bottomBarChild,
-    this.borderRadius,
-    this.childBorderRadius,
-    required this.child,
-  });
-  final Widget child;
-  final double windowWidth, topBarHeight, bottomBarHeight;
-  final double? windowHeight;
-  final List<Widget>? topBarChild, bottomBarChild;
-  final String topLeftCorner,
-      topRightCorner,
-      bottomLeftCorner,
-      bottomRightCorner,
-      topBody,
-      bottomBody;
-  final BorderRadius? borderRadius, childBorderRadius;
-
-  @override
-  State<WindowStructure> createState() => _WindowStructureState();
-}
-
-class _WindowStructureState extends State<WindowStructure> {
-  @override
-  Widget build(BuildContext context) {
-    return PhysicalModel(
-      elevation: 20,
-      shape: BoxShape.rectangle,
-      color: const Color(0XFF082EA2),
-      borderRadius: widget.borderRadius,
-      clipBehavior: Clip.antiAlias,
-      child: SizedBox(
-        width: widget.windowWidth,
-        height: widget.windowHeight,
-        child: Column(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            SizedBox(
-              width: widget.windowWidth,
-              height: widget.topBarHeight,
-              child: Stack(children: [
-                Positioned.fill(
-                    child: Row(
-                  children: [
-                    if (widget.topLeftCorner.isNotEmpty)
-                      TaskbarBody(
-                          imageRepeat: ImageRepeat.noRepeat,
-                          bodyPart: widget.topLeftCorner,
-                          height: widget.topBarHeight,
-                          fit: FlexFit.loose),
-                    if (widget.topBody.isNotEmpty)
-                      Flexible(
-                        fit: FlexFit.tight,
-                        child: TaskbarBody(
-                          imageRepeat: ImageRepeat.repeatX,
-                          bodyPart: widget.topBody,
-                          height: widget.topBarHeight,
-                          fit: FlexFit.tight,
-                          children: widget.topBarChild,
-                        ),
-                      ),
-                    if (widget.topRightCorner.isNotEmpty)
-                      TaskbarBody(
-                          imageRepeat: ImageRepeat.noRepeat,
-                          bodyPart: widget.topRightCorner,
-                          height: widget.topBarHeight,
-                          fit: FlexFit.loose)
-                  ],
-                )),
-              ]),
-            ),
-            SizedBox(
-              width: widget.windowWidth,
-              height: (widget.windowHeight != null)
-                  ? widget.windowHeight! -
-                      widget.topBarHeight -
-                      widget.bottomBarHeight
-                  : null,
-              child: ClipRRect(
-                  borderRadius: widget.childBorderRadius ?? BorderRadius.zero,
-                  child: widget.child),
-            ),
-            SizedBox(
-              height: widget.bottomBarHeight,
-              width: widget.windowWidth,
-              child: Row(
-                children: [
-                  if (widget.bottomLeftCorner.isNotEmpty)
-                    TaskbarBody(
-                        imageRepeat: ImageRepeat.noRepeat,
-                        bodyPart: widget.bottomLeftCorner,
-                        height: widget.bottomBarHeight,
-                        fit: FlexFit.loose),
-                  if (widget.bottomBody.isNotEmpty)
-                    Flexible(
-                        fit: FlexFit.tight,
-                        child: TaskbarBody(
-                          imageRepeat: ImageRepeat.repeatX,
-                          bodyPart: widget.bottomBody,
-                          height: widget.bottomBarHeight,
-                          fit: FlexFit.tight,
-                          children: widget.bottomBarChild,
-                        )),
-                  if (widget.bottomRightCorner.isNotEmpty)
-                    TaskbarBody(
-                        imageRepeat: ImageRepeat.noRepeat,
-                        bodyPart: widget.bottomRightCorner,
-                        height: widget.bottomBarHeight,
-                        fit: FlexFit.loose)
-                ],
-              ),
-            )
-          ],
-        ),
-      ),
-    );
-  }
-}
-
 class Window extends StatefulWidget {
   const Window(
-      {super.key,
-      required this.windowSize,
-      required this.windowModel,
-      required this.parent,
-      required this.child,
-      this.borderRadius});
+      {super.key, required this.windowSize, required this.windowModel, required this.child, this.borderRadius});
   final Size windowSize;
   final WindowModel windowModel;
   final BorderRadiusGeometry? borderRadius;
-  final Widget child, parent;
+  final Widget child;
 
   @override
   State<Window> createState() => _WindowState();
@@ -160,32 +22,49 @@ class Window extends StatefulWidget {
 class _WindowState extends State<Window> {
   final double _toolbarHeight = 30;
   late BorderRadiusGeometry _defaultRadius;
-  late Image appTopRight,
-      appTopLeft,
-      appTopBody,
-      taskbarMin,
-      taskbarMax,
-      taskbarQuit;
+  late Image taskbarMin, taskbarMax, taskbarQuit;
+  int maxSimultaneousDrags = 0;
+
+  Widget topBar = Container(
+    decoration: const BoxDecoration(
+        gradient: LinearGradient(colors: [
+      Color(0XFF316AD6),
+      Color(0XFF3884E6),
+      Color(0XFF4793E8),
+      Color(0XFF3782E5),
+      Color(0XFF296EE0),
+      Color(0XFF2561D9),
+      Color(0XFF235AD6),
+      Color(0XFF2258D5),
+      Color(0XFF2257D5),
+      Color(0XFF2257D5),
+      Color(0XFF2257D6),
+      Color(0XFF2157D7),
+      Color(0XFF2259D7),
+      Color(0XFF225AD9),
+      Color(0XFF235BD9),
+      Color(0XFF235CDB),
+      Color(0XFF245DDB),
+      Color(0XFF245EDC),
+      Color(0XFF255FDC),
+      Color(0XFF2660DD),
+      Color(0XFF2661DD),
+      Color(0XFF2662DE),
+      Color(0XFF2662df),
+      Color(0XFF2663e0),
+      Color(0XFF2663e0),
+      Color(0XFF2560de),
+      Color(0XFF2560de),
+      Color(0XFF1d4ec0),
+      Color(0XFF1942a6)
+    ], begin: Alignment.topCenter, end: Alignment.bottomCenter)),
+  );
 
   @override
   void initState() {
     super.initState();
-    appTopBody = Image.asset(ImageResources().applicationTopBody,
-        repeat: ImageRepeat.repeatX);
-    appTopLeft = Image.asset(ImageResources().applicationTopLeft);
-    appTopRight = Image.asset(ImageResources().applicationTopRight);
-
-    _defaultRadius = widget.borderRadius ??
-        const BorderRadius.only(
-            topLeft: Radius.circular(7), topRight: Radius.circular(7));
-  }
-
-  @override
-  void didChangeDependencies() {
-    precacheImage(appTopBody.image, context);
-    precacheImage(appTopLeft.image, context);
-    precacheImage(appTopRight.image, context);
-    super.didChangeDependencies();
+    _defaultRadius =
+        widget.borderRadius ?? const BorderRadius.only(topLeft: Radius.circular(7), topRight: Radius.circular(7));
   }
 
   @override
@@ -193,19 +72,15 @@ class _WindowState extends State<Window> {
     return Draggable(
         feedback: Material(color: Colors.transparent, child: widget),
         childWhenDragging: const SizedBox(),
-        maxSimultaneousDrags: (widget.windowModel.isDraggable) ? 1 : 0,
+        maxSimultaneousDrags: maxSimultaneousDrags,
         onDragEnd: widget.windowModel.dragWindow,
         child: PhysicalModel(
           elevation: 20,
           shape: BoxShape.rectangle,
           color: const Color(0XFF082EA2),
-          borderRadius: (widget.windowModel.isFullScreen)
-              ? BorderRadius.zero
-              : _defaultRadius as BorderRadius,
+          borderRadius: (widget.windowModel.isFullScreen) ? BorderRadius.zero : _defaultRadius as BorderRadius,
           child: ClipRRect(
-            borderRadius: (widget.windowModel.isFullScreen)
-                ? BorderRadius.zero
-                : _defaultRadius,
+            borderRadius: (widget.windowModel.isFullScreen) ? BorderRadius.zero : _defaultRadius,
             child: Container(
               height: widget.windowSize.height,
               width: widget.windowSize.width,
@@ -214,31 +89,27 @@ class _WindowState extends State<Window> {
                 mainAxisSize: MainAxisSize.min,
                 children: [
                   if (!widget.windowModel.isMinimized)
-                    GestureDetector(
-                      onDoubleTap: (widget.windowModel.canFullScreen)
-                          ? widget.windowModel.fullScreenToggle
-                          : null,
+                    InkWell(
+                      onDoubleTap: (widget.windowModel.canFullScreen) ? widget.windowModel.fullScreenToggle : null,
+                      onHover: (details) {
+                        setState(() {
+                          if (details && widget.windowModel.isDraggable) {
+                            maxSimultaneousDrags = 1;
+                          } else {
+                            maxSimultaneousDrags = 0;
+                          }
+                        });
+                      },
                       child: SizedBox(
                         height: _toolbarHeight,
-                        child: Row(
+                        child: Stack(
                           children: [
-                            if (!widget.windowModel.isFullScreen) appTopLeft,
-                            Flexible(
-                              child: Stack(
-                                children: [
-                                  Positioned.fill(child: appTopBody),
-                                  Positioned.fill(
-                                      child: Padding(
-                                    padding: (widget.windowModel.isFullScreen)
-                                        ? const EdgeInsets.symmetric(
-                                            horizontal: 3.0)
-                                        : EdgeInsets.zero,
-                                    child: taskbarChildren(context),
-                                  ))
-                                ],
-                              ),
-                            ),
-                            if (!widget.windowModel.isFullScreen) appTopRight
+                            Positioned.fill(child: topBar),
+                            Positioned.fill(
+                                child: Padding(
+                              padding: const EdgeInsets.symmetric(horizontal: 5.0),
+                              child: taskbarChildren(context),
+                            ))
                           ],
                         ),
                       ),
@@ -246,8 +117,7 @@ class _WindowState extends State<Window> {
                   Flexible(
                       child: Container(
                           margin: (!widget.windowModel.isFullScreen)
-                              ? const EdgeInsets.only(
-                                  left: 2, right: 2, bottom: 2)
+                              ? const EdgeInsets.only(left: 1, right: 1, bottom: 1)
                               : null,
                           color: Colors.white,
                           child: widget.child))
@@ -292,22 +162,20 @@ class _WindowState extends State<Window> {
           Padding(
             padding: const EdgeInsets.only(bottom: 4.0),
             child: XPImageButton(
-                onTap: () => widget.windowModel.minimizeToggle(context),
-                enabledImage: ImageResources().taskbarMin),
+                onTap: () => widget.windowModel.minimizeToggle(context), enabledImage: ImageResources().taskbarMin),
           ),
           const SizedBox(width: 3),
           Padding(
             padding: const EdgeInsets.only(bottom: 4.0),
-            child: XPImageButton(
-                onTap: widget.windowModel.fullScreenToggle,
-                enabledImage: ImageResources().taskbarFull),
+            child:
+                XPImageButton(onTap: widget.windowModel.fullScreenToggle, enabledImage: ImageResources().taskbarFull),
           ),
           const SizedBox(width: 3),
           Padding(
             padding: const EdgeInsets.only(bottom: 4.0),
             child: XPImageButton(
                 onTap: () {
-                  apps.closeApplication(widget.parent);
+                  apps.closeApplicationByName(widget.windowModel.windowName);
                 },
                 enabledImage: ImageResources().taskbarClose),
           ),

@@ -4,23 +4,23 @@ import 'package:my_portfolio/widgets/application.dart';
 class System32 extends ChangeNotifier {
   bool _isMenuActive = false;
   bool _isSoundOn = true;
-  List<Widget> _openApplications = [];
+  List<Application> _openApplications = [];
 
   bool get isMenuActive => _isMenuActive;
   bool get isSoundOn => _isSoundOn;
-  List<Widget> get openApplications => _openApplications;
+  List<Application> get openApplications => _openApplications;
 
-  void openApplication(Widget application) {
+  void openApplication(Application application) {
     _openApplications.add(application);
     notifyListeners();
   }
 
-  void closeApplication(Widget application) {
-    _openApplications.removeWhere((element) => element == application);
+  void closeApplicationByName(String name) {
+    _openApplications.removeWhere((element) => element.windowModel.windowName == name);
     notifyListeners();
   }
 
-  set openApplications(List<Widget> applications) {
+  set openApplications(List<Application> applications) {
     _openApplications = applications;
     notifyListeners();
   }

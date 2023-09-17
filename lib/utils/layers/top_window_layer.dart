@@ -15,22 +15,18 @@ class TopWindowLayer extends StatefulWidget {
   State<TopWindowLayer> createState() => _TopWindowLayerState();
 }
 
-class _TopWindowLayerState extends State<TopWindowLayer>
-    with SingleTickerProviderStateMixin {
+class _TopWindowLayerState extends State<TopWindowLayer> with SingleTickerProviderStateMixin {
   @override
   Widget build(BuildContext context) {
     var app = Provider.of<System32>(context, listen: true);
     return Stack(
       children: [
-        if (app.isMenuActive)
-          Positioned.fill(
-              child: GestureDetector(onTap: () => app.isMenuActive = false)),
+        if (app.isMenuActive) Positioned.fill(child: GestureDetector(onTap: () => app.isMenuActive = false)),
         AnimatedPositioned(
-          duration: const Duration(milliseconds: 300),
-          curve: Curves.easeInOut,
-          bottom: app.isMenuActive ? 0 : -800,
-          child: const StartMenu(),
-        ),
+            duration: const Duration(milliseconds: 300),
+            curve: Curves.easeInOut,
+            bottom: app.isMenuActive ? 0 : -800,
+            child: const StartMenu()),
         const Positioned(bottom: 10, right: 10, child: Clippy())
       ],
     );

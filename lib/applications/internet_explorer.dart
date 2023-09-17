@@ -5,22 +5,20 @@ import 'package:my_portfolio/widgets/application.dart';
 import 'package:my_portfolio/widgets/image_button.dart';
 import 'package:webviewx/webviewx.dart';
 
-class InternetExplorer extends StatelessWidget {
-  const InternetExplorer({super.key});
+Application internetExplorer() {
+  var windowModel = WindowModel(
+    windowName: "Internet Explorer",
+    windowIcon: Image.asset(ImageResources().miniInternetExplorer),
+    initialPosition: const RelativeRect.fromLTRB(100, 100, 100, 100),
+    canFullScreen: true,
+    isDraggable: true,
+  );
 
-  @override
-  Widget build(BuildContext context) {
-    return Application(
-        windowModel: WindowModel(
-          windowName: "Internet Explorer",
-          windowIcon: Image.asset(ImageResources().miniInternetExplorer),
-          initialPosition: const RelativeRect.fromLTRB(100, 100, 100, 100),
-          canFullScreen: true,
-          isDraggable: true,
-        ),
-        parent: this,
-        child: const IExplorerChild());
-  }
+  return Application(
+    windowModel: windowModel,
+    taskbarChild: ApplicationTaskbar(windowModel: windowModel),
+    child: const IExplorerChild(),
+  );
 }
 
 class IExplorerChild extends StatefulWidget {
@@ -34,7 +32,7 @@ class IExplorerChild extends StatefulWidget {
 
 class _IExplorerChildState extends State<IExplorerChild> {
   double toolbarHeight = 30;
-  TextEditingController _urlController = TextEditingController();
+  final _urlController = TextEditingController();
 
   @override
   void initState() {
@@ -53,15 +51,12 @@ class _IExplorerChildState extends State<IExplorerChild> {
           child: Row(
             children: [
               const SizedBox(width: 10),
-              XPImageButton(
-                  onTap: () {}, enabledImage: ImageResources().backButton),
+              XPImageButton(onTap: () {}, enabledImage: ImageResources().backButton),
               const Text(
                 " Back  ",
                 style: TextStyle(fontSize: 13),
               ),
-              XPImageButton(
-                  onTap: () {},
-                  enabledImage: ImageResources().backButtonDisabled),
+              XPImageButton(onTap: () {}, enabledImage: ImageResources().backButtonDisabled),
               const SizedBox(width: 20),
               Flexible(
                 child: LayoutBuilder(
@@ -77,19 +72,15 @@ class _IExplorerChildState extends State<IExplorerChild> {
                                 bottom: constraints.maxHeight / 2,
                                 left: 10,
                               ),
-                              border: const OutlineInputBorder(
-                                  borderSide: BorderSide(
-                                      color: Colors.black38, width: 1)),
-                              focusedBorder: const OutlineInputBorder(
-                                  borderSide: BorderSide(
-                                      color: Colors.black38, width: 1)),
+                              border: const OutlineInputBorder(borderSide: BorderSide(color: Colors.black38, width: 1)),
+                              focusedBorder:
+                                  const OutlineInputBorder(borderSide: BorderSide(color: Colors.black38, width: 1)),
                             ),
                           ),
                         )),
               ),
               const SizedBox(width: 20),
-              XPImageButton(
-                  onTap: () {}, enabledImage: ImageResources().goButton),
+              XPImageButton(onTap: () {}, enabledImage: ImageResources().goButton),
               const SizedBox(width: 10)
             ],
           ),
@@ -98,9 +89,7 @@ class _IExplorerChildState extends State<IExplorerChild> {
           height: 3,
           decoration: const BoxDecoration(
               gradient: LinearGradient(
-                  begin: Alignment.topCenter,
-                  end: Alignment.bottomCenter,
-                  colors: [Color(0XFFEDEAD7), Colors.grey])),
+                  begin: Alignment.topCenter, end: Alignment.bottomCenter, colors: [Color(0XFFEDEAD7), Colors.grey])),
         ),
         Flexible(
           child: LayoutBuilder(

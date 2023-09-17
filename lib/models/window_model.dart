@@ -22,10 +22,8 @@ class WindowModel extends ChangeNotifier {
     required bool isDraggable,
   })  : _initialPosition = initialPosition,
         _windowPosition = initialPosition,
-        _windowBottomRightMargin =
-            Offset(initialPosition.right, initialPosition.bottom),
-        _windowTopLeftMargin =
-            Offset(initialPosition.left, initialPosition.top),
+        _windowBottomRightMargin = Offset(initialPosition.right, initialPosition.bottom),
+        _windowTopLeftMargin = Offset(initialPosition.left, initialPosition.top),
         _canFullScreen = canFullScreen,
         _isDraggable = isDraggable;
 
@@ -33,8 +31,7 @@ class WindowModel extends ChangeNotifier {
 
   set windowBottomRightMargin(Offset margin) {
     _windowBottomRightMargin = margin;
-    _windowPosition = RelativeRect.fromLTRB(
-        _windowPosition.left, _windowPosition.top, margin.dx, margin.dy);
+    _windowPosition = RelativeRect.fromLTRB(_windowPosition.left, _windowPosition.top, margin.dx, margin.dy);
     notifyListeners();
   }
 
@@ -42,8 +39,7 @@ class WindowModel extends ChangeNotifier {
 
   set windowTopLeftMargin(Offset margin) {
     _windowTopLeftMargin = margin;
-    _windowPosition = RelativeRect.fromLTRB(
-        margin.dx, margin.dy, _windowPosition.right, _windowPosition.bottom);
+    _windowPosition = RelativeRect.fromLTRB(margin.dx, margin.dy, _windowPosition.right, _windowPosition.bottom);
     notifyListeners();
   }
 
@@ -97,25 +93,22 @@ class WindowModel extends ChangeNotifier {
   }
 
   void dragWindow(DraggableDetails details) {
-    var right = _windowBottomRightMargin.dx -
-        details.offset.dx +
-        _windowTopLeftMargin.dx;
-    var bottom = _windowBottomRightMargin.dy -
-        details.offset.dy +
-        _windowTopLeftMargin.dy;
+    var right = _windowBottomRightMargin.dx - details.offset.dx + _windowTopLeftMargin.dx;
+    var bottom = _windowBottomRightMargin.dy - details.offset.dy + _windowTopLeftMargin.dy;
 
-    _initialPosition = RelativeRect.fromLTRB(
-        details.offset.dx, details.offset.dy, right, bottom);
+    _initialPosition = RelativeRect.fromLTRB(details.offset.dx, details.offset.dy, right, bottom);
     _windowPosition = _initialPosition;
     _withAnimation = false;
     notifyListeners();
   }
 
   void fullScreenToggle() {
-    _isFullScreen = !_isFullScreen;
-    _isDraggable = (_isFullScreen) ? false : true;
-    _windowPosition = (_isFullScreen) ? RelativeRect.fill : _initialPosition;
-    _withAnimation = true;
+    if (_canFullScreen) {
+      _isFullScreen = !_isFullScreen;
+      _isDraggable = (_isFullScreen) ? false : true;
+      _windowPosition = (_isFullScreen) ? RelativeRect.fill : _initialPosition;
+      _withAnimation = true;
+    }
     notifyListeners();
   }
 
@@ -125,8 +118,7 @@ class WindowModel extends ChangeNotifier {
     _isMinimized = !_isMinimized;
     _isDraggable = (_isMinimized) ? false : true;
     _windowPosition = (_isMinimized)
-        ? RelativeRect.fromLTRB(
-            _initialPosition.left, ruler.height, _initialPosition.right, 0)
+        ? RelativeRect.fromLTRB(_initialPosition.left, ruler.height, _initialPosition.right, 0)
         : _initialPosition;
     _withAnimation = true;
     notifyListeners();

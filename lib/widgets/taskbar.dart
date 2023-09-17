@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:my_portfolio/utils/image_resource.dart';
 import 'package:my_portfolio/widgets/start_button.dart';
 
-class TaskBar extends StatelessWidget {
+class TaskBar extends StatefulWidget {
   const TaskBar({
     super.key,
     required this.taskbarItems,
@@ -10,6 +9,120 @@ class TaskBar extends StatelessWidget {
   });
 
   final List<Widget> taskbarItems, optionbarItems;
+
+  @override
+  State<TaskBar> createState() => _TaskBarState();
+}
+
+class _TaskBarState extends State<TaskBar> {
+  Widget taskbarStart = Container(
+    decoration: const BoxDecoration(
+        gradient: LinearGradient(colors: [
+      Color(0XFF316AD6),
+      Color(0XFF3884E6),
+      Color(0XFF4793E8),
+      Color(0XFF3782E5),
+      Color(0XFF296EE0),
+      Color(0XFF2561D9),
+      Color(0XFF235AD6),
+      Color(0XFF2258D5),
+      Color(0XFF2257D5),
+      Color(0XFF2257D5),
+      Color(0XFF2257D6),
+      Color(0XFF2157D7),
+      Color(0XFF2259D7),
+      Color(0XFF225AD9),
+      Color(0XFF235BD9),
+      Color(0XFF235CDB),
+      Color(0XFF245DDB),
+      Color(0XFF245EDC),
+      Color(0XFF255FDC),
+      Color(0XFF2660DD),
+      Color(0XFF2661DD),
+      Color(0XFF2662DE),
+      Color(0XFF2662df),
+      Color(0XFF2663e0),
+      Color(0XFF2663e0),
+      Color(0XFF2560de),
+      Color(0XFF2560de),
+      Color(0XFF1d4ec0),
+      Color(0XFF1942a6)
+    ], begin: Alignment.topCenter, end: Alignment.bottomCenter)),
+  );
+
+  Widget taskbarSplit = Container(
+    height: 30,
+    width: 1,
+    decoration: const BoxDecoration(
+        gradient: LinearGradient(colors: [
+      Color(0XFF0A60CC),
+      Color(0XFF14A3EC),
+      Color(0XFF1ABFF6),
+      Color(0XFF16AFF2),
+      Color(0XFF14A5F0),
+      Color(0XFF14A0EF),
+      Color(0XFF149CEE),
+      Color(0XFF149DEE),
+      Color(0XFF149DEE),
+      Color(0XFF149DEE),
+      Color(0XFF159EED),
+      Color(0XFF159EED),
+      Color(0XFF159EED),
+      Color(0XFF159EED),
+      Color(0XFF149DEE),
+      Color(0XFF149BED),
+      Color(0XFF1198EE),
+      Color(0XFF0F9BF0),
+      Color(0XFF0F9CF1),
+      Color(0XFF0F9DF1),
+      Color(0XFF0E9FF2),
+      Color(0XFF0EA2F3),
+      Color(0XFF10A5F2),
+      Color(0XFF10A9F2),
+      Color(0XFF11AFF4),
+      Color(0XFF13B5F4),
+      Color(0XFF14B8F4),
+      Color(0XFF15ACEF),
+      Color(0XFF1489DB),
+      Color(0XFF0A5ECA)
+    ], begin: Alignment.topCenter, end: Alignment.bottomCenter)),
+  );
+
+  Widget taskbarEnd = Container(
+    decoration: const BoxDecoration(
+        gradient: LinearGradient(colors: [
+      Color(0XFF0A60CC),
+      Color(0XFF14A2EB),
+      Color(0XFF19BAF3),
+      Color(0XFF16A1EA),
+      Color(0XFF1593E5),
+      Color(0XFF1389E0),
+      Color(0XFF1283DE),
+      Color(0XFF1284DF),
+      Color(0XFF1284DF),
+      Color(0XFF1284E0),
+      Color(0XFF1284E0),
+      Color(0XFF1184E0),
+      Color(0XFF1284E0),
+      Color(0XFF1184E0),
+      Color(0XFF0F83E0),
+      Color(0XFF0F83E0),
+      Color(0XFF0F83E0),
+      Color(0XFF0E85E2),
+      Color(0XFF0D86E5),
+      Color(0XFF0C87E7),
+      Color(0XFF0C89E8),
+      Color(0XFF0D8CE9),
+      Color(0XFF0D8FEB),
+      Color(0XFF0D91EB),
+      Color(0XFF0D90EB),
+      Color(0XFF0F8FE9),
+      Color(0XFF108CE6),
+      Color(0XFF1387E2),
+      Color(0XFF137AD9),
+      Color(0XFF0A5DCA)
+    ], begin: Alignment.topCenter, end: Alignment.bottomCenter)),
+  );
 
   @override
   Widget build(BuildContext context) {
@@ -24,9 +137,8 @@ class TaskBar extends StatelessWidget {
             children: [
               Positioned.fill(
                 child: TaskbarBody(
-                  bodyPart: ImageResources().taskbarStart,
+                  background: taskbarStart,
                   height: 30,
-                  imageRepeat: ImageRepeat.repeatX,
                   fit: FlexFit.loose,
                 ),
               ),
@@ -35,27 +147,20 @@ class TaskBar extends StatelessWidget {
           ),
         ),
         Flexible(
-          fit: FlexFit.tight,
           child: TaskbarBody(
-            bodyPart: ImageResources().taskbarStart,
-            height: 30,
             fit: FlexFit.tight,
-            imageRepeat: ImageRepeat.repeatX,
-            children: taskbarItems,
+            height: 30,
+            background: taskbarStart,
+            children: widget.taskbarItems,
           ),
         ),
+        taskbarSplit,
         TaskbarBody(
-            bodyPart: ImageResources().taskbarSplit,
-            height: 30,
-            imageRepeat: ImageRepeat.noRepeat,
-            fit: FlexFit.loose,
-            children: optionbarItems),
-        TaskbarBody(
-            bodyPart: ImageResources().taskbarEnd,
-            height: 30,
-            imageRepeat: ImageRepeat.repeatX,
-            fit: FlexFit.loose,
-            children: optionbarItems),
+          height: 30,
+          fit: FlexFit.loose,
+          background: taskbarEnd,
+          children: widget.optionbarItems,
+        ),
       ],
     );
   }
@@ -64,52 +169,35 @@ class TaskBar extends StatelessWidget {
 class TaskbarBody extends StatelessWidget {
   const TaskbarBody(
       {super.key,
-      required this.imageRepeat,
-      required this.bodyPart,
+      required this.background,
       required this.height,
       required this.fit,
       this.children});
-  final String bodyPart;
+  final Widget background;
   final FlexFit fit;
   final double height;
   final List<Widget>? children;
-  final ImageRepeat imageRepeat;
 
   @override
   Widget build(BuildContext context) {
     return SizedBox(
       height: height,
-      child: (imageRepeat == ImageRepeat.noRepeat)
-          ? Image.asset(
-              bodyPart,
-              height: height,
-              fit: BoxFit.contain,
-            )
-          : Stack(
-              clipBehavior: Clip.none,
-              children: [
-                Positioned.fill(
-                    child: Image.asset(
-                  bodyPart,
-                  gaplessPlayback: true,
-                  fit: BoxFit.contain,
-                  height: height,
-                  repeat: imageRepeat,
-                )),
-                Padding(
-                  padding:
-                      const EdgeInsets.only(left: 10.0, right: 10.0, top: 3),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    mainAxisSize: (fit == FlexFit.tight)
-                        ? MainAxisSize.max
-                        : MainAxisSize.min,
-                    children: children ?? [],
-                  ),
-                )
-              ],
+      child: Stack(
+        clipBehavior: Clip.none,
+        children: [
+          Positioned.fill(child: background),
+          Padding(
+            padding: const EdgeInsets.only(left: 10.0, right: 10.0, top: 3),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.start,
+              crossAxisAlignment: CrossAxisAlignment.center,
+              mainAxisSize:
+                  (fit == FlexFit.tight) ? MainAxisSize.max : MainAxisSize.min,
+              children: children ?? [],
             ),
+          )
+        ],
+      ),
     );
   }
 }

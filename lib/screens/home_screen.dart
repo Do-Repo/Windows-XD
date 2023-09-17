@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:my_portfolio/utils/app_provider.dart';
-import 'package:my_portfolio/windows/i_explorer.dart' deferred as app;
+import 'package:my_portfolio/applications/internet_explorer.dart' deferred as app;
 
 import 'package:provider/provider.dart';
 
@@ -22,15 +22,10 @@ class _HomeScreenState extends State<HomeScreen> {
   void initState() {
     super.initState();
 
-    // WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
-    //   document.documentElement!.requestFullscreen();
-    // });
-
     Future.delayed(const Duration(seconds: 3)).then((value) async {
       await app.loadLibrary();
       if (context.mounted) {
-        Provider.of<System32>(context, listen: false)
-            .openApplication(app.InternetExplorer());
+        Provider.of<System32>(context, listen: false).openApplication(app.internetExplorer());
       }
     });
   }
@@ -62,9 +57,9 @@ class _HomeScreenState extends State<HomeScreen> {
               ],
             ),
           ),
-          const TaskBar(
-            taskbarItems: [],
-            optionbarItems: [SoundButton(), TimeWidget()],
+          TaskBar(
+            taskbarItems: context.watch<System32>().openApplications.map((e) => e.taskbarChild).toList(),
+            optionbarItems: const [SoundButton(), TimeWidget()],
           )
         ],
       ),
