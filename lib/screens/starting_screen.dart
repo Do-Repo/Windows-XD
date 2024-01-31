@@ -4,10 +4,13 @@ import 'package:flutter/material.dart';
 import 'package:just_audio/just_audio.dart';
 import 'package:my_portfolio/screens/home_screen.dart';
 import 'package:my_portfolio/utils/image_resource.dart';
+import 'package:my_portfolio/utils/layers/applications_layer.dart';
+import 'package:my_portfolio/utils/layers/desktop_layer.dart';
+import 'package:my_portfolio/utils/layers/top_window_layer.dart';
 
 class StartingScreen extends StatefulWidget {
-  const StartingScreen({super.key});
-
+  const StartingScreen({super.key, this.skip});
+  final bool? skip;
   @override
   State<StartingScreen> createState() => _StartingScreenState();
 }
@@ -32,11 +35,8 @@ class _StartingScreenState extends State<StartingScreen> {
   void initState() {
     super.initState();
 
-    player.setAudioSource(
-        AudioSource.uri(
-            Uri.parse('asset:///assets/sounds/windows-xp-startup.mp3')),
-        initialPosition: Duration.zero,
-        preload: true);
+    player.setAudioSource(AudioSource.uri(Uri.parse('asset:///assets/sounds/windows-xp-startup.mp3')),
+        initialPosition: Duration.zero, preload: true);
 
     t = Timer.periodic(const Duration(milliseconds: 100), (timer) {
       setState(() {
@@ -44,12 +44,12 @@ class _StartingScreenState extends State<StartingScreen> {
       });
     });
 
-    Future.delayed(const Duration(seconds: 7), () {
+    Future.delayed(Duration(seconds: (widget.skip ?? false) ? 0 : 7), () {
       player.play().then((value) => player.dispose());
 
       Navigator.of(context).pushReplacement(MaterialPageRoute(
           builder: (_) => const HomeScreen(
-                children: [],
+                children: [DesktopIconsLayer(), ApplicationLayer(), TopWindowLayer()],
               )));
     });
   }
@@ -77,8 +77,7 @@ class _StartingScreenState extends State<StartingScreen> {
               padding: EdgeInsets.symmetric(vertical: barsVerticalPadding),
               margin: const EdgeInsets.only(top: 70),
               decoration: BoxDecoration(
-                  border: Border.all(
-                      style: BorderStyle.solid, width: 2, color: Colors.grey),
+                  border: Border.all(style: BorderStyle.solid, width: 2, color: Colors.grey),
                   borderRadius: const BorderRadius.all(Radius.circular(15))),
               child: ClipRRect(
                 borderRadius: const BorderRadius.all(Radius.circular(17)),
@@ -91,9 +90,8 @@ class _StartingScreenState extends State<StartingScreen> {
                       itemBuilder: (context, index) {
                         return Container(
                           width: 10,
-                          margin: EdgeInsets.symmetric(
-                              horizontal: barsHorizontalPadding,
-                              vertical: barsVerticalPadding),
+                          margin:
+                              EdgeInsets.symmetric(horizontal: barsHorizontalPadding, vertical: barsVerticalPadding),
                           decoration: BoxDecoration(
                               gradient: LinearGradient(
                                   begin: Alignment.topCenter,

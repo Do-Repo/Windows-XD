@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:my_portfolio/utils/app_provider.dart';
-import 'package:my_portfolio/applications/internet_explorer.dart' deferred as app;
 
 import 'package:provider/provider.dart';
 
@@ -21,13 +20,6 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   void initState() {
     super.initState();
-
-    Future.delayed(const Duration(seconds: 3)).then((value) async {
-      await app.loadLibrary();
-      if (context.mounted) {
-        Provider.of<System32>(context, listen: false).openApplication(app.internetExplorer());
-      }
-    });
   }
 
   @override
@@ -44,11 +36,9 @@ class _HomeScreenState extends State<HomeScreen> {
             child: Stack(
               fit: StackFit.expand,
               children: [
-                Positioned.fill(
-                  child: Image.asset(
-                    ImageResources().backgroundPicture,
-                    fit: BoxFit.cover,
-                  ),
+                Image.asset(
+                  ImageResources().backgroundPicture,
+                  fit: BoxFit.cover,
                 ),
                 Positioned.fill(
                     child: Stack(

@@ -9,6 +9,7 @@ Application internetExplorer() {
   var windowModel = WindowModel(
     windowName: "Internet Explorer",
     windowIcon: Image.asset(ImageResources().miniInternetExplorer),
+    desktopIcon: Image.asset(ImageResources().largeInternetExplorer, height: 48, width: 48),
     initialPosition: const RelativeRect.fromLTRB(100, 100, 100, 100),
     canFullScreen: true,
     isDraggable: true,
@@ -69,7 +70,6 @@ class _IExplorerChildState extends State<IExplorerChild> {
                               fillColor: Colors.white,
                               filled: true,
                               contentPadding: EdgeInsets.only(
-                                bottom: constraints.maxHeight / 2,
                                 left: 10,
                               ),
                               border: const OutlineInputBorder(borderSide: BorderSide(color: Colors.black38, width: 1)),

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:my_portfolio/models/window_model.dart';
+import 'package:my_portfolio/utils/constants.dart';
 import 'package:my_portfolio/utils/font_resource.dart';
 import 'package:my_portfolio/utils/image_resource.dart';
 import 'package:my_portfolio/widgets/image_button.dart';
@@ -26,38 +27,7 @@ class _WindowState extends State<Window> {
   int maxSimultaneousDrags = 0;
 
   Widget topBar = Container(
-    decoration: const BoxDecoration(
-        gradient: LinearGradient(colors: [
-      Color(0XFF316AD6),
-      Color(0XFF3884E6),
-      Color(0XFF4793E8),
-      Color(0XFF3782E5),
-      Color(0XFF296EE0),
-      Color(0XFF2561D9),
-      Color(0XFF235AD6),
-      Color(0XFF2258D5),
-      Color(0XFF2257D5),
-      Color(0XFF2257D5),
-      Color(0XFF2257D6),
-      Color(0XFF2157D7),
-      Color(0XFF2259D7),
-      Color(0XFF225AD9),
-      Color(0XFF235BD9),
-      Color(0XFF235CDB),
-      Color(0XFF245DDB),
-      Color(0XFF245EDC),
-      Color(0XFF255FDC),
-      Color(0XFF2660DD),
-      Color(0XFF2661DD),
-      Color(0XFF2662DE),
-      Color(0XFF2662df),
-      Color(0XFF2663e0),
-      Color(0XFF2663e0),
-      Color(0XFF2560de),
-      Color(0XFF2560de),
-      Color(0XFF1d4ec0),
-      Color(0XFF1942a6)
-    ], begin: Alignment.topCenter, end: Alignment.bottomCenter)),
+    decoration: BoxDecoration(gradient: Constants.taskbarStart),
   );
 
   @override

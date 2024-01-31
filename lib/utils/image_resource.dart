@@ -32,4 +32,5 @@ class ImageResources {
   // Application Icons
   var internetExplorer = "assets/icons/internet_explorer.png";
   var miniInternetExplorer = "assets/icons/internet_explorer_mini.png";
+  var largeInternetExplorer = "assets/icons/internet_explorer_large.png";
 }

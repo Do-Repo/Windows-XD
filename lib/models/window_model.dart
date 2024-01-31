@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 class WindowModel extends ChangeNotifier {
   String windowName;
   Image windowIcon;
+  Image desktopIcon;
 
   Offset _windowBottomRightMargin;
   Offset _windowTopLeftMargin;
@@ -17,6 +18,7 @@ class WindowModel extends ChangeNotifier {
   WindowModel({
     required this.windowName,
     required this.windowIcon,
+    required this.desktopIcon,
     required RelativeRect initialPosition,
     required bool canFullScreen,
     required bool isDraggable,
