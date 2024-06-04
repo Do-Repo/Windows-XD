@@ -66,15 +66,15 @@ class _IExplorerChildState extends State<IExplorerChild> {
                           child: TextField(
                             controller: _urlController,
                             cursorColor: Colors.grey,
-                            decoration: InputDecoration(
+                            decoration: const InputDecoration(
                               fillColor: Colors.white,
                               filled: true,
                               contentPadding: EdgeInsets.only(
                                 left: 10,
                               ),
-                              border: const OutlineInputBorder(borderSide: BorderSide(color: Colors.black38, width: 1)),
+                              border: OutlineInputBorder(borderSide: BorderSide(color: Colors.black38, width: 1)),
                               focusedBorder:
-                                  const OutlineInputBorder(borderSide: BorderSide(color: Colors.black38, width: 1)),
+                                  OutlineInputBorder(borderSide: BorderSide(color: Colors.black38, width: 1)),
                             ),
                           ),
                         )),

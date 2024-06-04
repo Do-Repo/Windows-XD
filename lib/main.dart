@@ -16,10 +16,9 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return const MaterialApp(
-        title: 'My Portfolio',
-        debugShowCheckedModeBanner: false,
-        home: StartingScreen(
-          skip: true,
-        ));
+      title: 'Windows XD',
+      debugShowCheckedModeBanner: false,
+      home: StartingScreen(skip: false),
+    );
   }
 }
